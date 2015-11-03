@@ -1,0 +1,47 @@
+Beyond.APM is inspired by application performance monitoring suppliers such as New Relic and AppDynamics, 
+and code was built upon some features of  OpenCover such as the model of ILMethods,ILInstuctions,etc.
+
+1.main aim:
+  -offer x86 and x64 profiling capabilities.
+  -offer classic .net framework like ASP.NET WebForm,MVC,WebService and some other open-source .net Application Performance Monitoring.
+  -
+2.main aim of profiler:
+  -can rewrite IL during the JIT Compilation Started phase, intecepting prolog/epilog shimming code to get performance metrics and AOP
+   target Method to offer additional enhancement of current code legacies with modifying the source code and recompliation.
+
+/////////////
+//Project structure:
+//
+////////////
+
+Beyond.APM.Profiler is the CLR Profiler Project. it contains a ATL COM Object ClrProfiler that implements the CLR Profiling Interface,
+ICorProfilerCallback,and ICorProfilerInfo,ICorProfilerInfo2,ICorProfilerInfo3,ICorProfilerInfo4.
+
+1.ProfilerBase.h,
+定义了所有的ClrProfiler需要实现的CLR Profiling API中的ProfilerCallback接口。
+
+2.ProfileInfoBase.h
+定义了所有的ClrProfiler需要实现的CLR Profiling API中的ProfilerInfo接口。
+
+3.ProfileInfo.h
+定义了实现ProfileInfoBase.h接口的COM对象,该对象通过动态的创建，完成查询CLR的任务。
+
+采用friend来提高访问的透明度。
+
+4.idl文件生成_i.c,_i.h文件，因此如果在idl中暴露其他COM组件中的接口，必须import .idl文件，否则会报MIDL2337前置引用错误，
+  引用idl文件之后，就会在_i.h文件中产生一些引用文件,_i.c和_i.h
+
+
+
+///////////
+//
+//问题概要：
+//////////
+
+1.error C1853 “Debug\***.pch”预编译头文件来自编译器的早期版本，或者预编译头为 C++ 而在 C 中使用它(或相反)
+
+原因在于IDE试图为 *.c文件使用预编译头。但是c文件是不能使用预编译头的。这是因为手动删除了项目自动生成的_i.c文件，再
+添加进来之后，会被C++项目当成是C++文件，因此就会有预编译头。
+
+在*.c文件上点击右键，属性，c++，预编译头，选择不使用。这样就OK了
+

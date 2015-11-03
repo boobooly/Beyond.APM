@@ -1,0 +1,26 @@
+HKCR
+{
+	ClrProfiler.1.1 = s 'ClrProfiler Class'
+	{
+		CLSID = s '{795638A6-2195-4499-B1CF-E00A595CA00F}'
+	}
+	ClrProfiler.1 = s 'ClrProfiler Class'
+	{		
+		CurVer = s 'ClrProfiler.1.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {795638A6-2195-4499-B1CF-E00A595CA00F} = s 'ClrProfiler Class'
+		{
+			ProgID = s 'ClrProfiler.1.1'
+			VersionIndependentProgID = s 'ClrProfiler.1'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			TypeLib = s '{27AD2A30-6668-4937-A2F6-7E99FDA91C79}'
+			Version = s '1.0'
+		}
+	}
+}

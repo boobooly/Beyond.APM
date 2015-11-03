@@ -1,0 +1,42 @@
+// BeyondAPMProfiler.idl : Beyond.APM.Profiler 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(BeyondAPMProfiler.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "corprof.idl";//增加以支持ICorProfilerCallback接口
+
+//[
+//	object,
+//	uuid(4CA9E51D-860C-4866-B962-7D491B706C06),
+//	dual,
+//	nonextensible,
+//	pointer_default(unique)
+//]
+//interface IClrProfiler : IDispatch{
+//};
+[
+	uuid(27AD2A30-6668-4937-A2F6-7E99FDA91C79),
+	version(1.0),
+]
+library BeyondAPMProfilerLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(795638A6-2195-4499-B1CF-E00A595CA00F)		
+	]
+	coclass ClrProfiler
+	{
+		//[default] interface IClrProfiler;
+		[default] interface ICorProfilerCallback;
+		interface ICorProfilerCallback2;
+		interface ICorProfilerCallback3;
+#ifndef _TOOLSETV71
+		interface ICorProfilerCallback4;
+		interface ICorProfilerCallback5;
+#endif
+	};
+};
+
