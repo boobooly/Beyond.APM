@@ -74,7 +74,13 @@ void Method::WriteMethod(IMAGE_COR_ILMETHOD* pMethod)
     
     memcpy(fatImage, &m_header, m_header.Size * sizeof(DWORD));
 
-    pCode = fatImage->GetCode();
+	pCode = fatImage->GetCode();
+
+	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
+
+	fatImage->SetMaxStack(8);
+
+	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
 
     SetBuffer(pCode);
 
@@ -640,6 +646,11 @@ long Method::GetMethodSize()
     }
 
     return size;
+}
+
+mdSignature Method::GetLocalVarToken()
+{
+	return m_header.LocalVarSigTok;
 }
 
 /// <summary>Test if a method has already been instrumented by comparing a list of instructions at that location</summary>
