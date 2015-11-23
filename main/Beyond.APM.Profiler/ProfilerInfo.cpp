@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "ProfilerInfo.h"
-#include "CodeCoverage.h"
+#include "ClrProfiler.h"
 
 // CProfilerInfo
 HRESULT STDMETHODCALLTYPE CProfilerInfo::SetEventMask(

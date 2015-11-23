@@ -25,11 +25,11 @@ std::wstring CClrProfiler::GetModulePath(ModuleID moduleId)
     return std::wstring(szModulePath);
 }
 
-std::wstring CClrProfiler::GetModulePath(ModuleID moduleId, AssemblyID *pAssemblyID)
+std::wstring CClrProfiler::GetModulePath(ModuleID moduleId,LPCBYTE &pModuleBaseLoadAddress, AssemblyID *pAssemblyID)
 {
     ULONG dwNameSize = 512;
     WCHAR szModulePath[512] = {};
-    COM_FAIL_MSG_RETURN_OTHER(m_profilerInfo->GetModuleInfo(moduleId, NULL, dwNameSize, &dwNameSize, szModulePath, pAssemblyID), std::wstring(),
+    COM_FAIL_MSG_RETURN_OTHER(m_profilerInfo->GetModuleInfo(moduleId, &pModuleBaseLoadAddress, dwNameSize, &dwNameSize, szModulePath, pAssemblyID), std::wstring(),
         _T("    ::GetModulePath(ModuleID,AssemblyID*) => GetModuleInfo => 0x%X"));
     return std::wstring(szModulePath);
 }
@@ -49,11 +49,11 @@ std::wstring CClrProfiler::GetAssemblyName(AssemblyID assemblyId)
 /// <summary>
 /// Get the function token, module ID and module name for a supplied FunctionID
 /// </summary>
-BOOL CClrProfiler::GetTokenAndModule(FunctionID funcId, mdToken& functionToken, ModuleID& moduleId, std::wstring &modulePath, AssemblyID *pAssemblyId)
+BOOL CClrProfiler::GetTokenAndModule(FunctionID funcId, mdToken& functionToken, ModuleID& moduleId, std::wstring &modulePath,LPCBYTE &pModuleBaseLoadAddress, AssemblyID *pAssemblyId)
 {
     COM_FAIL_MSG_RETURN_OTHER(m_profilerInfo2->GetFunctionInfo2(funcId, NULL, NULL, &moduleId, &functionToken, 0, NULL, NULL), FALSE,
          _T("    ::GetTokenAndModule(...) => GetFunctionInfo2 => 0x%X"));
-    modulePath = GetModulePath(moduleId, pAssemblyId);
+	modulePath = GetModulePath(moduleId,pModuleBaseLoadAddress, pAssemblyId);
     return TRUE;
 }
 
@@ -155,7 +155,7 @@ HRESULT CClrProfiler::GetModuleRef2050(IMetaDataAssemblyEmit *metaDataAssemblyEm
     return S_OK;
 }
 
-std::wstring CClrProfiler::GetTypeAndMethodName(FunctionID functionId,PCCOR_SIGNATURE &ppvSigBlob)
+std::wstring CClrProfiler::GetTypeAndMethodName(FunctionID functionId,PCCOR_SIGNATURE &ppvSigBlob,ULONG &pcbSigBlob,DWORD &wdMethodAttr,DWORD &wdMethodImplFlags,mdTypeDef &classId)
 {
 	std::wstring empty = L"";
 	CComPtr<IMetaDataImport2> metaDataImport2;
@@ -163,11 +163,11 @@ std::wstring CClrProfiler::GetTypeAndMethodName(FunctionID functionId,PCCOR_SIGN
 	COM_FAIL_MSG_RETURN_OTHER(m_profilerInfo->GetTokenAndMetaDataFromFunction(functionId, IID_IMetaDataImport, (IUnknown **)&metaDataImport2, &functionToken),
 		empty, _T("GetTokenAndMetaDataFromFunction"));
 
-	mdTypeDef classId;
+	//mdTypeDef classId;
 	WCHAR szMethodName[512] = {};
 	//PCCOR_SIGNATURE ppvSigBlob;
-	ULONG pcbSigBlob;
-	COM_FAIL_MSG_RETURN_OTHER(metaDataImport2->GetMethodProps(functionToken, &classId, szMethodName, 512, NULL, NULL, &ppvSigBlob, &pcbSigBlob, NULL, NULL),
+	//ULONG pcbSigBlob;
+	COM_FAIL_MSG_RETURN_OTHER(metaDataImport2->GetMethodProps(functionToken, &classId, szMethodName, 512, NULL, &wdMethodAttr, &ppvSigBlob, &pcbSigBlob, NULL, &wdMethodImplFlags),
 		empty, _T("GetMethodProps"));
 
 	WCHAR szTypeName[512] = {};

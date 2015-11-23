@@ -17,7 +17,7 @@ Method::Method(IMAGE_COR_ILMETHOD* pMethod)
     m_header.Size = 3;
     m_header.Flags = CorILMethod_FatFormat;
     m_header.MaxStack = 8; 
-
+	m_pMethod= new IMAGE_COR_ILMETHOD;
     ReadMethod(pMethod);
 }
 
@@ -81,6 +81,9 @@ void Method::WriteMethod(IMAGE_COR_ILMETHOD* pMethod)
 	fatImage->SetMaxStack(8);
 
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
+
+	//fatImage->SetLocalVarSigTok(0x11000004);
+	ATLTRACE(_T("Method::WriteMethod ==> FatImage LocaVarSigTok is %X"),fatImage->GetLocalVarSigTok());
 
     SetBuffer(pCode);
 

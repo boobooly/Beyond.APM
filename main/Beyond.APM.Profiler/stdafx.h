@@ -37,6 +37,7 @@
 #include <string>
 #include <vector>
 #include <hash_map>
+#include "tinyxml2.h"
 
 #ifdef UNICODE
 #define tstring std::wstring

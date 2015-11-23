@@ -5,11 +5,11 @@
 
 
 
-#include "OpenCoverProfiler_i.h"
+#include "BeyondAPMProfiler_i.h"
 
 #include "ProfilerInfoBase.h"
 
-class CCodeCoverage;
+class CClrProfiler;
 
 using namespace ATL;
 
@@ -44,11 +44,11 @@ public:
 	}
 
 private:
-	CCodeCoverage *m_pProfilerHook;
+	CClrProfiler *m_pProfilerHook;
 
 public:
 	virtual HRESULT STDMETHODCALLTYPE SetEventMask(
 		/* [in] */ DWORD dwEvents);
 
-	friend CCodeCoverage;
+	friend CClrProfiler;
 };

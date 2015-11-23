@@ -18,6 +18,7 @@ public:
 
 public:
     long GetMethodSize();
+	mdSignature GetLocalVarToken();
     void WriteMethod(IMAGE_COR_ILMETHOD* pMethod);
     void InsertInstructionsAtOriginalOffset(long origOffset, const InstructionList &instructions);
     void InsertInstructionsAtOffset(long offset, const InstructionList &instructions);
@@ -26,6 +27,12 @@ public:
     void PopulateILMap(ULONG mapSize, COR_IL_MAP* maps);
 
     bool IsInstrumented(long offset, const InstructionList &instructions);
+	PCOR_SIGNATURE m_pvSigBlob;
+	ULONG m_pOldSigCount;
+	mdTypeDef m_classId;
+	DWORD m_dwMethodAttr;
+	DWORD m_dwMethodImplFlags;
+	IMAGE_COR_ILMETHOD* m_pMethod;
 
 public:
     void SetMinimumStackSize(unsigned int minimumStackSize)
