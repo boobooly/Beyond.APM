@@ -42,6 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\liyan\IDE\NetProfiling\BAMP\tools\tinyxml2-3.0.0\tinyxml2\bin\Win32-Debug-Dll;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -52,8 +53,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;LOG4CPLUS_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\liyan\IDE\NetProfiling\BAMP\tools\tinyxml2-3.0.0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -77,6 +79,8 @@
       <ModuleDefinitionFile>.\Beyond.APM.Profiler.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RegisterOutput>true</RegisterOutput>
+      <AdditionalDependencies>log4cplusD.lib;log4cplusSD.lib;C:\liyan\IDE\NetProfiling\BAMP\tools\tinyxml2-3.0.0\tinyxml2\bin\Win32-Debug-Dll\tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\liyan\IDE\NetProfiling\BAMP\tools\tinyxml2-3.0.0\tinyxml2\bin\Win32-Debug-Dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,6 +122,7 @@
     <ClCompile Include="BeyondAPMProfiler_i.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CClrProfiler_ProfilerInfo.cpp" />
     <ClCompile Include="ClrProfiler.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -131,6 +136,8 @@
     <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="Method.cpp" />
     <ClCompile Include="Operations.cpp" />
+    <ClCompile Include="ProfilerInfo.cpp" />
+    <ClCompile Include="SignatureBlob.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -147,10 +154,14 @@
     <ClInclude Include="MethodBuffer.h" />
     <ClInclude Include="Operations.h" />
     <ClInclude Include="ProfileBase.h" />
+    <ClInclude Include="ProfilerInfo.h" />
     <ClInclude Include="ProfilerInfoBase.h" />
+    <ClInclude Include="ReleaseTrace.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SignatureBlob.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TracerCfg.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Beyond.APM.Profiler.rc" />

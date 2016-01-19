@@ -71,10 +71,14 @@ void Method::WriteMethod(IMAGE_COR_ILMETHOD* pMethod)
     {
         m_header.Flags |= CorILMethod_MoreSects;
     }
+
+	m_header.Flags |= CorILMethod_InitLocals;//init local variables
     
     memcpy(fatImage, &m_header, m_header.Size * sizeof(DWORD));
 
 	pCode = fatImage->GetCode();
+
+	ATLTRACE(_T("Method::WriteMethod ==> FatImage Flags is %X"),fatImage->GetFlags());
 
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
 
@@ -82,7 +86,8 @@ void Method::WriteMethod(IMAGE_COR_ILMETHOD* pMethod)
 
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
 
-	//fatImage->SetLocalVarSigTok(0x11000004);
+	//fatImage->SetLocalVarSigTok(0x11000004);//new LocalVarSig
+
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage LocaVarSigTok is %X"),fatImage->GetLocalVarSigTok());
 
     SetBuffer(pCode);

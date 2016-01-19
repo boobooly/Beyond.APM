@@ -49,6 +49,15 @@
     <ClCompile Include="BeyondAPMProfiler_i.c">
       <Filter>生成的文件</Filter>
     </ClCompile>
+    <ClCompile Include="ProfilerInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CClrProfiler_ProfilerInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SignatureBlob.cpp">
+      <Filter>源文件\Instrumentation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -92,6 +101,18 @@
     </ClInclude>
     <ClInclude Include="BeyondAPMProfiler_i.h">
       <Filter>生成的文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfilerInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ReleaseTrace.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TracerCfg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SignatureBlob.h">
+      <Filter>源文件\Instrumentation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

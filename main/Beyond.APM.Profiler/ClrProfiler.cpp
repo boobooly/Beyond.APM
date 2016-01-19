@@ -42,13 +42,6 @@ HRESULT CClrProfiler::ProfilerInitialise(IUnknown *pICorProfilerInfoUnk){
 	log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("Profiler"));*/
 	
 	//1.ATLTRACE to file initialize
-	
-	
-	//freopen_s(&stream,"c:\\beyondAPM.txt","w",stdout);
-	//SetAtlTraceOpt(_CRT_WARN,true,true,true,_CRTDBG_MODE_FILE,stream);
-	//LoadAtlDebugCfgW();
-	//CTraceCategory MY_CATEGORY(_T("BeyondAPM"));
-	////_CrtSetReportFile(_CRT_WARN,stream);
 
 	//TRACEHELPEXW(MY_CATEGORY,0,L"::BeyondAPM Initialise");
 	//FILE *stream;
@@ -358,7 +351,7 @@ HRESULT STDMETHODCALLTYPE CClrProfiler::JITCompilationStarted(
 		IMAGE_CEE_CS_CALLCONV_DEFAULT ,      // default calling convention,static method
 		0x06,                               // number of arguments == 3
 		ELEMENT_TYPE_VOID,                  // return type == void
-		//ELEMENT_TYPE_OBJECT,
+		//ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
@@ -715,7 +708,8 @@ WORD CClrProfiler::EmitNewLocalVarToken(ModuleID moduleId,mdSignature tkOldLocal
         ULONG nOldLocalVarSigSize = 0;
         COM_FAIL_MSG_RETURN_ERROR(metaDataImport->GetSigFromToken(tkOldLocalVarToken, &pvOldLocalVarSig, &nOldLocalVarSigSize),
 			_T("EmitNewLocalVarToken(...) => GetSigFromToken => 0x%X"));
-        
+		ATLTRACE(_T("old localvarsig is %16lX"),pvOldLocalVarSig);
+		fprintf(stream,"%x",pvOldLocalVarSig);
         _ASSERT(NULL != pvOldLocalVarSig);
 
         pvOldLocalVarSigNetPart = pvOldLocalVarSig;
@@ -748,7 +742,13 @@ WORD CClrProfiler::EmitNewLocalVarToken(ModuleID moduleId,mdSignature tkOldLocal
     //signatureNewLocalVar += CorSigCompressToken(tkExceptionTypeRef, signatureNewLocalVar);
     signatureNewLocalVar += CorSigCompressElementType(ELEMENT_TYPE_OBJECT, signatureNewLocalVar); // GetTracer返回的ITracer对象。
     ULONG nSize = (ULONG)(signatureNewLocalVar - vLocalVarSignature);
-    ATLTRACE(_T("New Local Var Signature Size: %d\n"), nSize);
+	PCCOR_SIGNATURE sigTrace = vLocalVarSignature;
+
+	for(int i=0;i<nSize;i++)
+	{
+		ATLTRACE(_T("Print New LocalSigVarToken byte(%d):(%c)",i,*sigTrace++));
+	}
+    ATLTRACE(_T("New Local Var Signature Size: %x\n"), nSize);
 
 //    mdToken tokenNewLocalVarSig = mdSignatureNil;
 	
