@@ -334,7 +334,7 @@ HRESULT STDMETHODCALLTYPE CClrProfiler::JITCompilationStarted(
 #ifdef _WIN64
 	COR_SIGNATURE sigAgent[] = {
 		IMAGE_CEE_CS_CALLCONV_DEFAULT,      // default calling convention
-		0x06,                               // number of arguments == 3
+		0x06,                               // number of arguments == 6
 		ELEMENT_TYPE_VOID,                  // return type == void
 		/*ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
@@ -350,7 +350,7 @@ HRESULT STDMETHODCALLTYPE CClrProfiler::JITCompilationStarted(
 	COR_SIGNATURE sigAgent[] = {
 		IMAGE_CEE_CS_CALLCONV_DEFAULT ,      // default calling convention,static method
 		0x06,                               // number of arguments == 3
-		ELEMENT_TYPE_VOID,                  // return type == void
+		ELEMENT_TYPE_STRING,                  // return type == void
 		//ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
 		ELEMENT_TYPE_STRING,
