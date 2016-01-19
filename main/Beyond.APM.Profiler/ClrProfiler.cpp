@@ -528,7 +528,7 @@ HRESULT STDMETHODCALLTYPE CClrProfiler::JITCompilationStarted(
 		instructions.push_back(new Instruction(CEE_LDARG_0));
 		instructions.push_back(new Instruction(CEE_NOP,0));//for step debug
 		instructions.push_back(new Instruction(CEE_CALL,agentGetTracerRef));
-		//instructions.push_back(new Instruction(CEE_STLOC_S,nIndexOfNewLocalVar));
+		instructions.push_back(new Instruction(CEE_STLOC_S,nIndexOfNewLocalVar));
 
 		/*InstructionList instructionTail;
 		instructionTail.push_back(new Instruction(CEE_LDLOCA_S,nIndexOfNewLocalVar));

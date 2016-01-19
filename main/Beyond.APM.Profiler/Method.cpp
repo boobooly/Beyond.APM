@@ -86,7 +86,7 @@ void Method::WriteMethod(IMAGE_COR_ILMETHOD* pMethod)
 
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage MaxStack is %d"),fatImage->GetMaxStack());
 
-	//fatImage->SetLocalVarSigTok(0x11000004);//new LocalVarSig
+	fatImage->SetLocalVarSigTok(0x11000004);//new LocalVarSig
 
 	ATLTRACE(_T("Method::WriteMethod ==> FatImage LocaVarSigTok is %X"),fatImage->GetLocalVarSigTok());
 
